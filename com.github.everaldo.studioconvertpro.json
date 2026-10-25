@@ -1,0 +1,90 @@
+{
+    "id" : "com.github.everaldo.studioconvertpro",
+    "runtime" : "org.gnome.Platform",
+    "runtime-version" : "50",
+    "sdk" : "org.gnome.Sdk",
+    "command" : "studioconvertpro",
+    "finish-args" : [
+        "--share=network",
+        "--share=ipc",
+        "--socket=fallback-x11",
+        "--device=dri",
+        "--socket=wayland",
+        "--socket=pulseaudio",
+        "--filesystem=xdg-music"
+    ],
+    "cleanup" : [
+        "/include",
+        "/lib/pkgconfig",
+        "*.la",
+        "*.a"
+    ],
+    "modules" : [
+        {
+            "name" : "lame",
+            "config-opts" : [
+                "--disable-static",
+                "--disable-frontend"
+            ],
+            "sources" : [
+                {
+                    "type" : "archive",
+                    "url" : "https://downloads.sourceforge.net/project/lame/lame/3.100/lame-3.100.tar.gz",
+                    "sha256" : "ddfe36cab873794038ae2c1210557ad34857a4b6bdc515785d1da9e175b1da1e"
+                }
+            ]
+        },
+        {
+            "name" : "ffmpeg",
+            "buildsystem" : "simple",
+            "build-commands" : [
+                "./configure --prefix=${FLATPAK_DEST} --enable-shared --disable-static --disable-doc --disable-debug --disable-ffplay --enable-libmp3lame",
+                "make -j${FLATPAK_BUILDER_N_JOBS}",
+                "make install"
+            ],
+            "sources" : [
+                {
+                    "type" : "git",
+                    "url" : "https://github.com/FFmpeg/FFmpeg.git",
+                    "tag" : "n7.1",
+                    "commit" : "507a51fbe9732f0f6f12f43ce12431e8faa834b7"
+                }
+            ]
+        },
+        {
+            "name" : "python3-dependencies",
+            "buildsystem" : "simple",
+            "build-options" : {
+                "build-args" : [
+                    "--share=network"
+                ]
+            },
+            "build-commands" : [
+                "pip3 install --prefix=${FLATPAK_DEST} yt-dlp librosa numpy soundfile"
+            ]
+        },
+        {
+            "name" : "python3-demucs",
+            "buildsystem" : "simple",
+            "build-options" : {
+                "build-args" : [
+                    "--share=network"
+                ]
+            },
+            "build-commands" : [
+                "pip3 install --prefix=${FLATPAK_DEST} torch --index-url https://download.pytorch.org/whl/cpu",
+                "pip3 install --prefix=${FLATPAK_DEST} demucs"
+            ]
+        },
+        {
+            "name" : "studio-convertpro",
+            "buildsystem" : "meson",
+            "sources" : [
+                {
+                    "type" : "dir",
+                    "path" : "."
+                }
+            ]
+        }
+    ]
+}

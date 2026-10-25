@@ -1,0 +1,8 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+data/com.github.everaldo.studioconvertpro.desktop.in
+data/com.github.everaldo.studioconvertpro.metainfo.xml.in
+data/com.github.everaldo.studioconvertpro.gschema.xml
+src/main.py
+src/window.py
+src/window.ui

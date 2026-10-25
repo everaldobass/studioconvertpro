@@ -1,0 +1,3 @@
+[D-BUS Service]
+Name=com.github.everaldo.studioconvertpro
+Exec=@bindir@/studioconvertpro --gapplication-service

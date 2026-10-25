@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=studioconvertpro
+Exec=studioconvertpro
+Icon=com.github.everaldo.studioconvertpro
+Terminal=false
+Type=Application
+Categories=Utility;
+Keywords=GTK;
+StartupNotify=true
+DBusActivatable=true

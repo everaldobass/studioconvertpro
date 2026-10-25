@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.0"/>
+  <template class="StudioConvertWindow" parent="AdwApplicationWindow">
+    <property name="default-width">1200</property>
+    <property name="default-height">750</property>
+    <property name="title">Studio Convert Pro</property>
+
+    <property name="content">
+      <object class="GtkBox">
+        <property name="orientation">vertical</property>
+
+        <child>
+          <object class="AdwHeaderBar"/>
+        </child>
+
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="vexpand">True</property>
+
+            <!-- COLUNA ESQUERDA: Conversor e Playlist -->
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="spacing">16</property>
+                <property name="width-request">350</property>
+                <property name="margin-top">16</property>
+                <property name="margin-bottom">16</property>
+                <property name="margin-start">16</property>
+                <property name="margin-end">8</property>
+
+                <!-- Bloco Conversor -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">8</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Conversor MP3</property>
+                        <property name="xalign">0</property>
+                        <style><class name="title-3"/></style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">6</property>
+                        <child>
+                          <object class="GtkEntry" id="url_entry">
+                            <property name="placeholder-text">YouTube link aqui...</property>
+                            <property name="hexpand">True</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="btn_limpar">
+                            <property name="label">Limpar</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btn_converter">
+                        <property name="label">Converter para MP3</property>
+                        <style><class name="suggested-action"/></style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="status_box">
+                        <property name="placeholder-text">Status da Operacao</property>
+                        <property name="editable">False</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkSeparator"><property name="orientation">horizontal</property></object>
+                </child>
+
+                <!-- Bloco Playlist -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">8</property>
+                    <property name="vexpand">True</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="label">Playlist</property>
+                        <property name="xalign">0</property>
+                        <style><class name="title-3"/></style>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow">
+                        <property name="vexpand">True</property>
+                        <property name="hscrollbar-policy">never</property>
+                        <child>
+                          <object class="GtkListBox" id="playlist_listbox">
+                            <style><class name="boxed-list"/></style>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="btn_excluir">
+                        <property name="label">Excluir</property>
+                        <style><class name="destructive-action"/></style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+
+            <!-- COLUNA DIREITA: Engenharia de Stems e Mixer -->
+            <child>
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <property name="spacing">16</property>
+                <property name="hexpand">True</property>
+                <property name="margin-top">16</property>
+                <property name="margin-bottom">16</property>
+                <property name="margin-start">8</property>
+                <property name="margin-end">16</property>
+
+                <child>
+                  <object class="GtkLabel">
+                    <property name="label">Separaçao de Faixas - Stems</property>
+                    <property name="xalign">0</property>
+                    <style><class name="title-2"/></style>
+                  </object>
+                </child>
+
+                <!-- Metadados BPM / TOM -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">horizontal</property>
+                    <property name="spacing">12</property>
+                    <property name="homogeneous">True</property>
+                    <child>
+                      <object class="GtkEntry" id="bpm_box">
+                        <property name="placeholder-text">BPM: ---</property>
+                        <property name="editable">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkEntry" id="key_box">
+                        <property name="placeholder-text">Tom: ---</property>
+                        <property name="editable">False</property>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkButton" id="btn_processar">
+                    <property name="label">Separar Faixas - Isolar Instrumentos</property>
+                  </object>
+                </child>
+
+                <child>
+                  <object class="GtkEntry" id="status_processamento">
+                    <property name="placeholder-text">Status do Processamento</property>
+                    <property name="editable">False</property>
+                  </object>
+                </child>
+
+                <!-- Mesa de Mixagem Independente -->
+                <child>
+                  <object class="GtkBox">
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">12</property>
+                    <property name="margin-top">8</property>
+
+                    <!-- Slider Vocal -->
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Vocals:</property>
+                            <property name="width-request">90</property>
+                            <property name="xalign">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="slider_vocal">
+                            <property name="hexpand">True</property>
+                            <property name="adjustment">
+                              <object class="GtkAdjustment">
+                                <property name="lower">0</property>
+                                <property name="upper">100</property>
+                                <property name="value">100</property>
+                                <property name="step-increment">1</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- Slider Bateria -->
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Bateria:</property>
+                            <property name="width-request">90</property>
+                            <property name="xalign">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="slider_bateria">
+                            <property name="hexpand">True</property>
+                            <property name="adjustment">
+                              <object class="GtkAdjustment">
+                                <property name="lower">0</property>
+                                <property name="upper">100</property>
+                                <property name="value">100</property>
+                                <property name="step-increment">1</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- Slider Baixo -->
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Baixo:</property>
+                            <property name="width-request">90</property>
+                            <property name="xalign">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="slider_baixo">
+                            <property name="hexpand">True</property>
+                            <property name="adjustment">
+                              <object class="GtkAdjustment">
+                                <property name="lower">0</property>
+                                <property name="upper">100</property>
+                                <property name="value">100</property>
+                                <property name="step-increment">1</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                    <!-- Slider Outro -->
+                    <child>
+                      <object class="GtkBox">
+                        <property name="orientation">horizontal</property>
+                        <property name="spacing">12</property>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="label">Outros:</property>
+                            <property name="width-request">90</property>
+                            <property name="xalign">0</property>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScale" id="slider_outro">
+                            <property name="hexpand">True</property>
+                            <property name="adjustment">
+                              <object class="GtkAdjustment">
+                                <property name="lower">0</property>
+                                <property name="upper">100</property>
+                                <property name="value">100</property>
+                                <property name="step-increment">1</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+
+                  </object><!-- fecha mesa de mixagem -->
+                </child>
+              </object><!-- fecha coluna direita -->
+            </child>
+          </object><!-- fecha as duas colunas -->
+        </child>
+
+        <!-- RODAPÉ: Reprodutor -->
+        <child>
+          <object class="GtkSeparator"/>
+        </child>
+        <child>
+          <object class="GtkBox">
+            <property name="orientation">horizontal</property>
+            <property name="spacing">12</property>
+            <property name="margin-top">10</property>
+            <property name="margin-bottom">10</property>
+            <property name="margin-start">16</property>
+            <property name="margin-end">16</property>
+            <child>
+              <object class="GtkLabel" id="lbl_tocando_agora">
+                <property name="label">Nenhuma música selecionada</property>
+                <property name="hexpand">True</property>
+                <property name="xalign">0</property>
+                <property name="ellipsize">end</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_player_anterior">
+                <property name="label">⏮</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_player_play">
+                <property name="label">▶ Play</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="btn_player_proximo">
+                <property name="label">⏭</property>
+              </object>
+            </child>
+            <child>
+              <object class="GtkScale" id="volume_slider">
+                <property name="width-request">140</property>
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="lower">0</property>
+                    <property name="upper">100</property>
+                    <property name="value">80</property>
+                    <property name="step-increment">1</property>
+                  </object>
+                </property>
+              </object>
+            </child>
+          </object>
+        </child>
+
+      </object><!-- fecha GtkBox vertical do content -->
+    </property>
+  </template>
+</interface>
